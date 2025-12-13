@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  api:
+    build: ./apps/api
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/api/src
+          target: /app/src
+        - action: rebuild
+          path: ./apps/api/package.json
+        - action: rebuild
+          path: ./apps/api/tsconfig.json

@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.dist
+apps/**/node_modules
+apps/**/dist
