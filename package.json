@@ -1,13 +1,22 @@
 {
   "name": "pizza-monorepo",
+  "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "dependencies": {
+    "@pizza/types": "1.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
   "scripts": {
-    "dev:api": "npm --workspace apps/api run dev",
-    "build:api": "npm --workspace apps/api run build",
-    "start:api": "npm --workspace apps/api run start"
+    "dev:api": "yarn workspace pizza-api dev",
+    "build:api": "yarn workspace pizza-api build",
+    "start:api": "yarn workspace pizza-api start",
+    "start:client": "yarn workspace client start"
   }
 }
