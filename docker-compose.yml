@@ -1,7 +1,9 @@
 version: "3.9"
 services:
   api:
-    build: ./apps/api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
     ports:
       - "8080:8080"
     environment:
@@ -13,5 +15,23 @@ services:
           target: /app/src
         - action: rebuild
           path: ./apps/api/package.json
+        - action: rebuild
+          path: ./packages/types/package.json
+
+  client:
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/client/src
+          target: /app/apps/client/src
+        - action: rebuild
+          path: ./apps/client/package.json
         - action: rebuild
           path: ./apps/api/tsconfig.json
