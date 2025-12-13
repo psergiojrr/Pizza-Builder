@@ -8,5 +8,5 @@ app.use(express.json())
 
 app.use(routes)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 app.listen(port, () => console.log(`API on http://localhost:${port}`))
