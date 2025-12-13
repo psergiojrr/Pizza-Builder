@@ -5,12 +5,14 @@ import './App.css'
 import { Col, Layout, Row } from 'antd'
 import { Content, Header } from 'antd/es/layout/layout'
 import { PizzaForm } from './components/PizzaForm'
+import { PizzaList } from './components/PizzaList'
 import Title from 'antd/es/typography/Title'
 
 function App() {
   const [sizes, setSizes] = useState<Size[]>([])
   const [ingredients, setIngredients] = useState<Ingredient[]>([])
   const [loading, setLoading] = useState(true)
+  const [pizzasLoading, setPizzasLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const [selectedSize, setSelectedSize] = useState<string>('')
@@ -39,10 +41,13 @@ function App() {
 
   const fetchPizzas = useCallback(async () => {
     try {
+      setPizzasLoading(true)
       const pizzasData = await listPizzas(listQuery)
       setPizzas(pizzasData)
     } catch (err: any) {
       setError(err.message)
+    } finally {
+      setPizzasLoading(false)
     }
   }, [listQuery])
 
@@ -77,6 +82,9 @@ function App() {
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
             <PizzaForm sizes={sizes} ingredients={ingredients} onSubmit={handleCreatePizza} />
+          </Col>
+          <Col xs={24} md={12}>
+            <PizzaList pizzas={pizzas} loading={pizzasLoading} />
           </Col>
         </Row>
       </Content>
