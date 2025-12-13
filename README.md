@@ -9,7 +9,6 @@ Complete application to compose, search, and list pizzas. The project is split i
 - **Yarn Workspaces**: Monorepo with the shared package `@pizza/types`.
 - **React (Create React App)**: Client SPA.
 - **Ant Design (`antd`)**: UI components.
-- **Testing Library + Jest DOM**: Front-end tests.
 - **CORS**: Cross-origin access for the API.
 - **ts-node-dev**: Dev server with API hot reload.
 - **Docker + Docker Compose**: Containerization and orchestration.
@@ -17,7 +16,7 @@ Complete application to compose, search, and list pizzas. The project is split i
 
 ## 🧩 Structure
 - `apps/api`: Express/TypeScript API. Entrypoint at `src/server.ts`.
-- `apps/client`: React App with Ant Design and tests.
+- `apps/client`: React App with Ant Design.
 - `packages/types`: TypeScript types shared between API and Web.
 - `docker-compose.yml`: Brings up `api` (port 8080) and `client` (port 3000 → 80 inside Nginx container).
 
@@ -133,13 +132,6 @@ yarn --cwd apps/client start
 4. Access:
 - API: http://localhost:8080
 - Web: http://localhost:3000
-
-## 🧪 Tests (client)
-Run the front-end test suite:
-
-```bash
-yarn --cwd apps/client test
-```
 
 ## 🔍 Main API Routes
 - `GET /health`: health check.
