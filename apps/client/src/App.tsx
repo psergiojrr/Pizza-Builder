@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import type { Size, Ingredient, Pizza, ListPizzasQuery, CreatePizzaBody } from '@pizza/types'
-import { getSizes, getIngredients, createPizza, listPizzas, getPizzaById } from './api'
+import { getSizes, getIngredients, createPizza, listPizzas } from './api'
 import './App.css'
 import { Col, Layout, Row } from 'antd'
 import { Content, Header } from 'antd/es/layout/layout'

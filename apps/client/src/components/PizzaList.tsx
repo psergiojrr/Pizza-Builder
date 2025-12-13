@@ -3,10 +3,12 @@ import { Table, Tag, Typography, Input, Button, Space, Tooltip } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import type { Pizza } from '@pizza/types'
 import type { ColumnsType } from 'antd/es/table'
+import { PizzaSearch } from './PizzaSearch'
 
 interface PizzaListProps {
   pizzas: Pizza[]
   loading: boolean
+  showTitle?: boolean
 }
 
 const { Title } = Typography
@@ -111,14 +113,23 @@ const columns: ColumnsType<Pizza> = [
   },
 ]
 
-export const PizzaList: React.FC<PizzaListProps> = ({ pizzas, loading }) => {
+export const PizzaList: React.FC<PizzaListProps> = ({ pizzas, loading, showTitle = true }) => {
   return (
     <Table
       columns={columns}
       dataSource={pizzas}
       rowKey="id"
       loading={loading}
-      title={() => <Title level={3}>Pizza Orders</Title>}
+      title={() =>
+        showTitle ? (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Title level={3} style={{ margin: 0 }}>
+              Pizza Orders
+            </Title>
+            <PizzaSearch />
+          </div>
+        ) : null
+      }
       pagination={{ pageSize: 5, simple: true }}
     />
   )
