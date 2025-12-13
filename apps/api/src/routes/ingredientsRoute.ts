@@ -1,10 +1,8 @@
 import { Router } from "express"
-import { ingredients } from "../commons/ingredients"
+import { IngredientsController } from "../controller/IngredientsController"
 
 const router = Router()
 
-router.get('/ingredients', (_req, res) => res
-  .status(200)
-  .json(ingredients))
+router.get('/ingredients', IngredientsController.getAllIngredients)
 
 export default router

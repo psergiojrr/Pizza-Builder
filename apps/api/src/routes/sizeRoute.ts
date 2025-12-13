@@ -1,10 +1,8 @@
 import { Router } from "express"
-import { sizes } from "../commons/sizes"
+import { SizesController } from "../controller/SizesController"
 
 const router = Router()
 
-router.get('/sizes', (_req, res) => res
-  .status(200)
-  .json(sizes))
+router.get('/sizes', SizesController.getAllSizes)
 
 export default router
