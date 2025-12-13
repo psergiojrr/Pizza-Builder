@@ -13,6 +13,17 @@ const { Title } = Typography
 
 const columns: ColumnsType<Pizza> = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    render: (id: string) => (
+      <Tooltip title={id}>
+        <span>{id}</span>
+      </Tooltip>
+    ),
+    width: 60,
+  },
+  {
     title: 'Customer',
     dataIndex: 'customerName',
     key: 'customerName',
@@ -54,15 +65,34 @@ const columns: ColumnsType<Pizza> = [
     title: 'Ingredients',
     key: 'ingredients',
     dataIndex: 'ingredients',
-    render: (ingredients: { name: string; id: string }[]) => (
-      <>
-        {ingredients.map(ingredient => (
-          <Tag color="blue" key={ingredient.id}>
-            {ingredient.name}
-          </Tag>
-        ))}
-      </>
-    ),
+    render: (ingredients: { name: string; id: string }[]) => {
+      const MAX_VISIBLE = 2
+      const visibleIngredients = ingredients.slice(0, MAX_VISIBLE)
+      const hiddenIngredientsCount = ingredients.length - MAX_VISIBLE
+
+      const allIngredientsTooltip = (
+        <div>
+          {ingredients.map(ingredient => (
+            <div key={ingredient.id}>{ingredient.name}</div>
+          ))}
+        </div>
+      )
+
+      return (
+        <>
+          {visibleIngredients.map(ingredient => (
+            <Tag color="blue" key={ingredient.id}>
+              {ingredient.name}
+            </Tag>
+          ))}
+          {hiddenIngredientsCount > 0 && (
+            <Tooltip title={allIngredientsTooltip}>
+              <Tag>+{hiddenIngredientsCount} more</Tag>
+            </Tooltip>
+          )}
+        </>
+      )
+    },
   },
   {
     title: 'Total Price',
