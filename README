@@ -1,0 +1,128 @@
+# Full-Stack Pizza Ordering App
+
+This is a small full-stack application that allows users to configure, order, and view pizza orders. The project is built as a monorepo containing a Node.js/Express backend and a React frontend.
+
+## Features
+
+- **Create Pizza Orders**: A user-friendly form to select a pizza size, add ingredients, and place an order.
+- **List & Filter Orders**: View all created orders in a table with features for sorting (by date, price) and filtering (by customer name).
+- **Search by ID**: A modal-based search to find a specific pizza order by its unique ID.
+- **Shared Types**: A dedicated package ensures type safety and consistency between the frontend and backend.
+- **Containerized Environment**: The entire application stack can be run easily with a single Docker command.
+
+## Tech Stack
+
+- **Monorepo Management**:
+  - **Yarn Workspaces**: To manage dependencies and scripts across multiple packages (`api`, `client`, `types`).
+
+- **Backend (`apps/api`)**:
+  - **Runtime**: Node.js
+  - **Framework**: Express.js
+  - **Language**: TypeScript
+  - **Development**: `ts-node-dev` for live reloading.
+  - **Dependencies**: `cors`.
+
+- **Frontend (`apps/client`)**:
+  - **Framework**: React (bootstrapped with Create React App)
+  - **Language**: TypeScript
+  - **UI Library**: Ant Design (for components like forms, tables, modals, and notifications).
+  - **Styling**: Plain CSS with a modern reset.
+
+- **Shared (`packages/types`)**:
+  - A dedicated workspace package for sharing TypeScript interfaces and types between the API and the client.
+
+- **Tooling & Environment**:
+  - **Containerization**: Docker & Docker Compose.
+  - **Node Version Manager**: NVM (with a `.nvmrc` file to enforce the Node.js version).
+  - **Package Manager**: Yarn v1 (Classic).
+
+---
+
+## Prerequisites
+
+To run this project, you will need the following installed on your machine:
+
+- **Docker** and **Docker Compose** (Recommended for the easiest setup).
+- **Node.js** (v18.18.0 or as specified in the `.nvmrc` file). We recommend using [NVM](https://github.com/nvm-sh/nvm) to manage Node.js versions.
+- **Yarn v1 (Classic)**.
+
+---
+
+## Getting Started
+
+There are two ways to run this project: using Docker (recommended) or running each service locally.
+
+### Method 1: Running with Docker (Recommended)
+
+This is the simplest way to get the entire application running.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone INSERT THE CORRECT LINK TO CLONE
+    cd <project-folder>
+    ```
+
+2.  **Build and run the services:**
+    This command will build the Docker images for the API and the client and start them.
+    ```bash
+    docker compose up --build
+    ```
+
+3.  **Access the application:**
+    -   **Frontend (React App)**: Open your browser to [http://localhost:3000](http://localhost:3000)
+    -   **Backend (API)**: The API will be running at [http://localhost:8080](http://localhost:8080)
+
+### Method 2: Running Locally (Manual Setup)
+
+This method is useful if you want to run the services directly on your machine without Docker.
+
+1.  **Clone the repository:**
+    ```bash
+    git clone INSERT THE CORRECT LINK TO CLONE
+    cd <project-folder>
+    ```
+
+2.  **Set the correct Node.js version:**
+    If you have NVM installed, simply run:
+    ```bash
+    nvm use
+    ```
+    This will automatically use the version specified in the `.nvmrc` file.
+
+3.  **Install all dependencies:**
+    From the root of the project, run the `yarn` command. This will install dependencies for all workspaces (`api`, `client`, and `types`).
+    ```bash
+    yarn install
+    ```
+
+4.  **Start the Backend API:**
+    In a new terminal window, run the following command to start the API server:
+    ```bash
+    yarn dev:api
+    ```
+    The API will be available at `http://localhost:8080`.
+
+5.  **Start the Frontend Client:**
+    In a second terminal window, run the following command to start the React development server:
+    ```bash
+    yarn start:client
+    ```
+    Your browser should automatically open to `http://localhost:3000`.
+
+---
+
+## Project Structure
+
+The project is organized as a monorepo with the following structure:
+
+```
+.
+├── apps/
+│   ├── api/         # The Node.js/Express backend server
+│   └── client/      # The React frontend application
+├── packages/
+│   └── types/       # Shared TypeScript types
+├── docker-compose.yml
+├── package.json     # Root package.json with workspace configuration
+└── .nvmrc           # Node.js version file
+```
