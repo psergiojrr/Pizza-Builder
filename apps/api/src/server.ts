@@ -27,7 +27,6 @@ interface IPizza {
 
 interface IIngredients {
   id: string
-  name: string
   extraPrice: number
 }
 
@@ -40,9 +39,9 @@ const sizes: ISizes[] = [
 
 //Like sizes, I was in doubt if id should be number or a uuid, so I choosed to use the ingredient name as id
 const ingredients: IIngredients[] = [
-  { id: 'cheese', name: 'Cheese', extraPrice: 500 },
-  { id: 'pepperoni', name: 'Pepperoni', extraPrice: 700 },
-  { id: 'olive', name: 'Olive', extraPrice: 300 },
+  { id: 'cheese', extraPrice: 500 },
+  { id: 'pepperoni', extraPrice: 700 },
+  { id: 'olive', extraPrice: 300 },
 ]
 
 const sizesMap = new Map<string, Size>(sizes.map(size => [size.id, size]))
@@ -102,13 +101,31 @@ app.post('/pizzas', (req, res) => {
   return res.status(201).json(pizza)
 })
 
-app.get('/pizzas', (_req, res) => {
-  //TODO: include search by optional query param
-  //customerName : filter by customer name (contains, case‑insensitive).
-  //sortBy : "finalPrice" or "createdAt" .
-  //order : "asc" or "desc" .
+app.get('/pizzas', (req, res) => {
+  const { customerName, sortBy, order } = req.query as {
+    customerName?: string
+    sortBy?: 'finalPrice' | 'createdAt'
+    order?: 'asc' | 'desc'
+  }
 
-  return res.status(200).json(pizzas)
+  let result = [...pizzas]
+
+  if (customerName && typeof customerName === 'string') {
+    const customerQuerySearch = customerName.toLowerCase()
+    result = result.filter(p => p.customerName.toLowerCase().includes(customerQuerySearch))
+  }
+
+  if (sortBy === 'finalPrice' || sortBy === 'createdAt') {
+    const direction = order === 'desc' ? -1 : 1
+    result.sort((a, b) => {
+      if (sortBy === 'finalPrice') {
+        return (a.finalPrice - b.finalPrice) * direction
+      }
+      return (new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()) * direction
+    })
+  }
+
+  return res.status(200).json(result)
 })
 
 app.get('/pizzas/:id', (req, res) => {
