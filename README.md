@@ -111,6 +111,8 @@ Notes:
 - The `api` service runs `yarn dev` (hot reload via `ts-node-dev`).
 
 ### Without Docker (local development)
+Open two terminals: one for the API and another for the client.
+
 1. Install dependencies at the project root:
 
 ```bash
@@ -120,13 +122,17 @@ yarn install
 2. Run API (port 8080):
 
 ```bash
-yarn --cwd apps/api dev
+cd apps/api
+nvm use
+yarn dev
 ```
 
 3. Run React client (port 3000):
 
 ```bash
-yarn --cwd apps/client start
+cd apps/client
+nvm use
+yarn dev
 ```
 
 4. Access:
@@ -138,6 +144,7 @@ yarn --cwd apps/client start
 - `GET /ingredients`: list of ingredients.
 - `GET /sizes`: list of sizes.
 - `GET /pizzas`: list of pizzas.
+- `GET /pizzas/:id`: get pizza by id.
 - `POST /pizzas`: create a pizza.
 
 ## 🗂️ Hot reload-optimized development
@@ -145,13 +152,6 @@ With Docker, `docker-compose.yml` is configured with `develop.watch` to sync sou
 - Syncs `apps/api/src` into the API container.
 - Rebuilds when relevant `package.json` files change.
 - For the client, syncs `apps/client/src` and serves the built app via Nginx.
-
-## 📦 Production build
-Client:
-- The `client` Dockerfile builds with Node (build stage) and serves with Nginx.
-
-API:
-- `yarn --cwd apps/api build` produces `dist/`, and `yarn --cwd apps/api start` runs the compiled server (outside Docker, if preferred).
 
 ## 💡 Tips
 - If ports 3000 or 8080 are in use, adjust mappings in `docker-compose.yml`.
