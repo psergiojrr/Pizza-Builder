@@ -157,5 +157,21 @@ With Docker, `docker-compose.yml` is configured with `develop.watch` to sync sou
 - If ports 3000 or 8080 are in use, adjust mappings in `docker-compose.yml`.
 - On macOS, grant Docker Desktop permissions to mount/sync files in your project directory.
 
+.- **API (unit tests for controllers):**
+  - Focused unit tests use Jest with mocked `Request`/`Response`.
+  - Run the full API suite from the API folder:
+
+```bash
+cd apps/api
+yarn test
+```
+
+  - Run only the controller unit tests:
+
+```bash
+cd apps/api
+yarn test -- tests/pizzas.controller.unit.test.ts
+```
+
 ## 👤 Author
 Project developed by Paulo Sérgio.
